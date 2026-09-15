@@ -14,7 +14,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 APP_VERSION = "5.9.9"
-APP_BUILD_ID = "V599-SAFE-BG-20260916-A"
+APP_BUILD_ID = "V599-SAFE-BG-TABLEFIX-20260916-D"
 
 # Always load the quant engine from the quant_engine.py file that sits next to
 # this app.py.  Using a unique module name deliberately bypasses a stale
@@ -952,18 +952,18 @@ def _live_levels_html_v599(r):
             f"</div>")
 
 def _scanner_stage_guide_v599():
-    st.markdown("""
-    <div class='card' style='margin-top:12px'>
-      <b>Setup progression — what the stages mean</b><br><br>
-      <span class='muted'><b>WAIT / COLD</b></span> — conditions are not ready yet
-      &nbsp;→&nbsp; <span class='warn'><b>WATCH / BUILDING</b></span> — an early setup is forming
-      &nbsp;→&nbsp; <span class='warn'><b>ARMED</b></span> — most conditions are aligned
-      &nbsp;→&nbsp; <span class='warn'><b>TRIGGER</b></span> — the setup reached its trigger in the measured session
-      &nbsp;→&nbsp; <span class='good'><b>LIVE TRIGGERED</b></span> — confirmed while the regular market is open.<br><br>
-      <span class='bad'><b>WEAKENED</b></span> means current pre/after-market behavior is weakening the previous-session setup.
-      A previous-session TRIGGER is not shown as a live trade until the current session confirms it.
-    </div>
-    """,unsafe_allow_html=True)
+    with st.expander("ℹ️ Setup progression — stage guide", expanded=False):
+        st.markdown(
+            "**WAIT / COLD** → **WATCH / BUILDING** → **ARMED** → **TRIGGER** → **LIVE TRIGGERED**"
+        )
+        st.caption(
+            "WAIT/COLD = not ready • WATCH/BUILDING = early setup • ARMED = most conditions aligned • "
+            "TRIGGER = setup triggered in the measured session • LIVE TRIGGERED = confirmed while the regular market is open."
+        )
+        st.caption(
+            "WEAKENED = current pre/after-market behavior is weakening the previous-session setup. "
+            "A previous-session TRIGGER is not treated as a live trade until the current session confirms it."
+        )
 
 def _render_scanner_results_v599(show_mode):
     runtime=_scanner_runtime_v599()
@@ -999,24 +999,67 @@ def _render_scanner_results_v599(show_mode):
     else:
         for _,r in res.head(5).iterrows():
             status_html=_session_badges_html_v599(r)
-            levels_html=_live_levels_html_v599(r)
             pm_vol="unavailable" if pd.isna(r.get('PMVolumeStrength',np.nan)) else f"{float(r.get('PMVolumeStrength')):.2f}x"
             ah_vol="unavailable" if pd.isna(r.get('AHVolumeStrength',np.nan)) else f"{float(r.get('AHVolumeStrength')):.2f}x"
-            actionable="<span class='good'><b>🟢 ACTIONABLE NOW</b></span>" if bool(r.get('ActionableNow',False)) else "<span class='warn'><b>⏳ WATCH / SETUP</b></span>"
-            st.markdown(f"""<div class='card'>
-            <div style='display:flex;justify-content:space-between;gap:14px'>
-              <div><b style='font-size:1.45rem'>🔥 #{int(r.Rank)} {r.Ticker}</b><div style='margin-top:8px'>{status_html}</div></div>
-              <div style='text-align:right'><span class='score'>{float(r.Prediction):.1f}</span><div class='muted'>Dynamic Prediction</div></div>
-            </div>
-            <div style='margin-top:10px'><b>TOP {safe(r.get('TopScore',np.nan),1)}</b> &nbsp;|&nbsp; <b>Opportunity {safe(r.get('OpportunityScore',np.nan),1)}</b> &nbsp;|&nbsp; {actionable}</div>
-            {levels_html}
-            <hr style='border-color:#263249'>
-            <div class='muted'>Market {r.get('Market','—')} • Market Rank #{int(r.get('MarketRank',0))} • PM Change {safe(r.get('PMChangePct',np.nan),2)}% • PM Volume {pm_vol} • AH Change {safe(r.get('AHChangePct',np.nan),2)}% • AH Volume {ah_vol}<br>
-            Move {safe(r.get('MoveScore',np.nan),1)} • Explosive {safe(r.get('ExplosiveScore',np.nan),1)} • Entry {safe(r.get('EntryScore',np.nan),1)} • Hourly {safe(r.get('HourlyConfirm',np.nan),1)} • Reliability {safe(r.get('Reliability',np.nan),1)} • Lift {safe(r.get('SignalLift',np.nan),2)}x • RVOL {safe(r.get('VolumeRatio',np.nan))}x • RSI {safe(r.get('RSI14',np.nan),1)} • Hit {safe(r.get('EmpiricalHitRate',np.nan),1)}% ({int(r.get('BacktestN',0) or 0)} signals)</div>
-            </div>""",unsafe_allow_html=True)
+
+            with st.container(border=True):
+                left,right=st.columns([2.3,1.0])
+                with left:
+                    st.markdown(f"### 🔥 #{int(r.Rank)} {r.Ticker}")
+                    st.markdown(status_html,unsafe_allow_html=True)
+                with right:
+                    st.metric("Dynamic Prediction",f"{float(r.Prediction):.1f}")
+
+                action_label="🟢 ACTIONABLE NOW" if bool(r.get('ActionableNow',False)) else "⏳ WATCH / SETUP"
+                action_color="green" if bool(r.get('ActionableNow',False)) else "orange"
+                st.markdown(
+                    f"**TOP {safe(r.get('TopScore',np.nan),1)}**  |  "
+                    f"**Opportunity {safe(r.get('OpportunityScore',np.nan),1)}**  |  "
+                    f":{action_color}[**{action_label}**]"
+                )
+
+                if str(r.get('MarketPhase',''))=='OPEN' and str(r.get('LiveStage',''))=='LIVE TRIGGERED':
+                    vals={k:pd.to_numeric(pd.Series([r.get(k,np.nan)]),errors='coerce').iloc[0]
+                          for k in ['EntryLow','EntryHigh','Invalidation','Target1','Target2']}
+                    if all(np.isfinite(vals[k]) for k in vals):
+                        entry=(vals['EntryLow']+vals['EntryHigh'])/2.0
+                        risk=entry-vals['Invalidation']
+                        rr1=((vals['Target1']-entry)/risk) if risk>0 else np.nan
+                        rr2=((vals['Target2']-entry)/risk) if risk>0 else np.nan
+                        e1,e2,e3,e4=st.columns(4)
+                        e1.metric("Entry zone",f"{vals['EntryLow']:.3f}–{vals['EntryHigh']:.3f}")
+                        e2.metric("Stop",f"{vals['Invalidation']:.3f}")
+                        e3.metric("Target 1",f"{vals['Target1']:.3f}")
+                        e4.metric("Target 2",f"{vals['Target2']:.3f}")
+                        if np.isfinite(rr1) and np.isfinite(rr2):
+                            st.caption(f"Risk/Reward: 1:{rr1:.1f} to T1 • 1:{rr2:.1f} to T2")
+
+                st.caption(
+                    f"Market {r.get('Market','—')} • Market Rank #{int(r.get('MarketRank',0))} • "
+                    f"PM {safe(r.get('PMChangePct',np.nan),2)}% / Vol {pm_vol} • "
+                    f"AH {safe(r.get('AHChangePct',np.nan),2)}% / Vol {ah_vol}"
+                )
+                st.caption(
+                    f"Move {safe(r.get('MoveScore',np.nan),1)} • Explosive {safe(r.get('ExplosiveScore',np.nan),1)} • "
+                    f"Entry {safe(r.get('EntryScore',np.nan),1)} • Hourly {safe(r.get('HourlyConfirm',np.nan),1)} • "
+                    f"Reliability {safe(r.get('Reliability',np.nan),1)} • Lift {safe(r.get('SignalLift',np.nan),2)}x • "
+                    f"RVOL {safe(r.get('VolumeRatio',np.nan))}x • RSI {safe(r.get('RSI14',np.nan),1)} • "
+                    f"Hit {safe(r.get('EmpiricalHitRate',np.nan),1)}% ({int(r.get('BacktestN',0) or 0)} signals)"
+                )
         _scanner_stage_guide_v599()
-        cols=['Rank','GlobalRank','MarketRank','Market','MarketPhase','SessionStatus','LiveStage','ActionableNow','PreviousSessionTrigger','PMConfirmation','PMChangePct','PMVolume','PMVolumeStrength','AHConfirmation','AHChangePct','AHVolume','AHVolumeStrength','Sector','TopScore','OpportunityStage','OpportunityScore','Reliability','TimingStage','MoveScore','ExplosiveScore','EntryScore','EntryLow','EntryHigh','BreakoutTrigger','Invalidation','Target1','Target2','Accel1D','Accel2D','Accel3D','Rising3D','HourlyConfirm','Signal','Prediction','DynamicQuant','DynamicEarly','EntryStatus','ExplosiveStage','P5_5D','P10_5D','P15_5D','P15_5D_N','RobustRVOL','Retention','DryUp','ReExpansion','SignalLift','CalibrationConfidence','Price','VolumeRatio','RSI14','EmpiricalHitRate','BacktestN']
-        st.dataframe(res[[c for c in cols if c in res]],use_container_width=True,hide_index=True)
+        # Clear ranking table:
+        # Rank = position inside the CURRENT selected view/filter.
+        # GlobalRank = position among the full scan result set.
+        # MarketRank = position only inside the stock's exchange (NASDAQ / Hong Kong / Tel Aviv).
+        cols=['Ticker','Rank','GlobalRank','MarketRank','Market','Sector','MarketPhase','SessionStatus','LiveStage','ActionableNow','PreviousSessionTrigger','PMConfirmation','PMChangePct','PMVolume','PMVolumeStrength','AHConfirmation','AHChangePct','AHVolume','AHVolumeStrength','TopScore','OpportunityStage','OpportunityScore','Reliability','TimingStage','MoveScore','ExplosiveScore','EntryScore','EntryLow','EntryHigh','BreakoutTrigger','Invalidation','Target1','Target2','Accel1D','Accel2D','Accel3D','Rising3D','HourlyConfirm','Signal','Prediction','DynamicQuant','DynamicEarly','EntryStatus','ExplosiveStage','P5_5D','P10_5D','P15_5D','P15_5D_N','RobustRVOL','Retention','DryUp','ReExpansion','SignalLift','CalibrationConfidence','Price','VolumeRatio','RSI14','EmpiricalHitRate','BacktestN']
+        table=res[[c for c in cols if c in res]].copy()
+        table=table.rename(columns={
+            'Rank':'View Rank',
+            'GlobalRank':'Global Rank',
+            'MarketRank':'Market Rank',
+        })
+        st.caption("Ranking: View Rank = position in the current filter • Global Rank = position in the full scan • Market Rank = position only inside NASDAQ / Hong Kong / Tel Aviv. Market Rank is NOT a sector rank.")
+        st.dataframe(table,use_container_width=True,hide_index=True)
         st.download_button("⬇️ Download Scanner to Excel",data=scanner_excel_bytes(res),file_name=f"AI_Stock_Hunter_V{APP_VERSION}_scan_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",use_container_width=True,key="scanner_excel_v599")
     if skipped:
         with st.expander(f"Skipped / error details ({len(skipped)})"):
