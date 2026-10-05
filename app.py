@@ -29,8 +29,8 @@ import plotly.graph_objects as go
 import yfinance as yf
 from plotly.subplots import make_subplots
 
-APP_VERSION = "6.3.9.65"
-APP_BUILD_ID = "V63965-LIQUIDITY-RANK-RR-PREMOVE-CREDIT-20261005-A"
+APP_VERSION = "6.3.9.64"
+APP_BUILD_ID = "V63964-LIQUIDITY-WATCH-ISRAEL-CREDIT-20261005-A"
 
 # Shared HTML-escape helper used by both Scanner and Analyze cards.
 # V6.3.9.22 had a Scanner-local helper with the same name, which caused
@@ -792,7 +792,7 @@ def backtest_display(bt):
 st.set_page_config(page_title=f"AI Stock Hunter — V{APP_VERSION}",page_icon="📈",layout="wide",initial_sidebar_state="collapsed")
 st.markdown("""<style>
 :root{--bg:#080b12;--panel:#111722;--panel2:#151d2b;--text:#f5f7fb;--muted:#8f9bad;--accent:#8b6cff;--cyan:#39d9e8;--good:#35d49a;--warn:#f6c85f;--bad:#ff647c;--line:#243044}
-html,body,[data-testid="stAppViewContainer"]{background:radial-gradient(circle at 15% 0%,#151a2e 0,#080b12 34%);color:var(--text)} [data-testid="stHeader"]{background:transparent}.block-container{max-width:1180px;padding-top:2rem;padding-bottom:5rem} h1,h2,h3,h4,p,label,span,div{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.hero{padding:30px 30px;border:1px solid #2b3954;border-radius:26px;background:radial-gradient(circle at 85% 15%,rgba(57,217,232,.12),transparent 34%),linear-gradient(135deg,rgba(139,108,255,.20),rgba(17,23,34,.95));box-shadow:0 24px 70px rgba(0,0,0,.32);margin-bottom:22px}.hero-title{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:850;line-height:.98;letter-spacing:-.05em}.hero-sub{color:var(--muted);font-size:1.08rem;margin-top:14px}.hero-credit{display:inline-block;margin-top:12px;padding:5px 11px;border:1px solid rgba(57,255,136,.72);border-radius:999px;background:rgba(35,255,112,.07);color:#39ff88;font-size:1.02rem;font-weight:950;letter-spacing:.035em;text-shadow:0 0 7px rgba(57,255,136,.98),0 0 16px rgba(57,255,136,.66),0 0 28px rgba(57,255,136,.36);box-shadow:0 0 8px rgba(57,255,136,.62),0 0 20px rgba(57,255,136,.22),inset 0 0 12px rgba(57,255,136,.06)}.analyze-complete-il{margin:10px 0 14px;padding:11px 16px;border:1px solid #35ff7a;border-radius:14px;background:rgba(35,255,112,.08);color:#54ff8c;font-weight:900;font-size:1.02rem;box-shadow:0 0 8px rgba(53,255,122,.75),0 0 24px rgba(53,255,122,.30);text-shadow:0 0 10px rgba(84,255,140,.9)}.badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#20283a;color:#b8c2d5;font-size:.78rem;font-weight:700;letter-spacing:.04em}.card{background:linear-gradient(180deg,rgba(22,30,45,.98),rgba(14,20,31,.98));border:1px solid #2a3851;border-radius:20px;padding:18px 20px;margin-bottom:14px;box-shadow:0 14px 34px rgba(0,0,0,.20)}.good{color:var(--good);font-weight:800}.warn{color:var(--warn);font-weight:800}.bad{color:var(--bad);font-weight:800}.muted{color:var(--muted)}.section{font-size:1.55rem;font-weight:800;margin:28px 0 12px}.score{font-size:2.1rem;font-weight:850}.stButton>button{width:100%;min-height:52px;border-radius:14px;background:linear-gradient(90deg,#6e56ff,#3c8cff);border:0;color:white;font-weight:750}.stButton>button:hover{filter:brightness(1.08);color:white}.stTextArea textarea,.stTextInput input,div[data-baseweb="select"]>div{background:#111722!important;border-color:#29354a!important;border-radius:13px!important}.stDataFrame{border:1px solid #263249;border-radius:16px;overflow:hidden}[data-testid="stMetric"]{background:#111722;border:1px solid #263249;padding:14px;border-radius:16px}[data-testid="stMetricValue"]{font-size:1.55rem}.stTabs [data-baseweb="tab-list"]{gap:10px}.stTabs [data-baseweb="tab"]{border-radius:12px;padding:8px 14px}.stTabs [aria-selected="true"]{background:#171f31}
+html,body,[data-testid="stAppViewContainer"]{background:radial-gradient(circle at 15% 0%,#151a2e 0,#080b12 34%);color:var(--text)} [data-testid="stHeader"]{background:transparent}.block-container{max-width:1180px;padding-top:2rem;padding-bottom:5rem} h1,h2,h3,h4,p,label,span,div{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.hero{padding:30px 30px;border:1px solid #2b3954;border-radius:26px;background:radial-gradient(circle at 85% 15%,rgba(57,217,232,.12),transparent 34%),linear-gradient(135deg,rgba(139,108,255,.20),rgba(17,23,34,.95));box-shadow:0 24px 70px rgba(0,0,0,.32);margin-bottom:22px}.hero-title{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:850;line-height:.98;letter-spacing:-.05em}.hero-sub{color:var(--muted);font-size:1.08rem;margin-top:14px}.hero-credit{margin-top:10px;color:#d8e2f4;font-size:.92rem;font-weight:750;letter-spacing:.02em}.analyze-complete-il{margin:10px 0 14px;padding:11px 16px;border:1px solid #35ff7a;border-radius:14px;background:rgba(35,255,112,.08);color:#54ff8c;font-weight:900;font-size:1.02rem;box-shadow:0 0 8px rgba(53,255,122,.75),0 0 24px rgba(53,255,122,.30);text-shadow:0 0 10px rgba(84,255,140,.9)}.badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#20283a;color:#b8c2d5;font-size:.78rem;font-weight:700;letter-spacing:.04em}.card{background:linear-gradient(180deg,rgba(22,30,45,.98),rgba(14,20,31,.98));border:1px solid #2a3851;border-radius:20px;padding:18px 20px;margin-bottom:14px;box-shadow:0 14px 34px rgba(0,0,0,.20)}.good{color:var(--good);font-weight:800}.warn{color:var(--warn);font-weight:800}.bad{color:var(--bad);font-weight:800}.muted{color:var(--muted)}.section{font-size:1.55rem;font-weight:800;margin:28px 0 12px}.score{font-size:2.1rem;font-weight:850}.stButton>button{width:100%;min-height:52px;border-radius:14px;background:linear-gradient(90deg,#6e56ff,#3c8cff);border:0;color:white;font-weight:750}.stButton>button:hover{filter:brightness(1.08);color:white}.stTextArea textarea,.stTextInput input,div[data-baseweb="select"]>div{background:#111722!important;border-color:#29354a!important;border-radius:13px!important}.stDataFrame{border:1px solid #263249;border-radius:16px;overflow:hidden}[data-testid="stMetric"]{background:#111722;border:1px solid #263249;padding:14px;border-radius:16px}[data-testid="stMetricValue"]{font-size:1.55rem}.stTabs [data-baseweb="tab-list"]{gap:10px}.stTabs [data-baseweb="tab"]{border-radius:12px;padding:8px 14px}.stTabs [aria-selected="true"]{background:#171f31}
 .top5-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}.top5-name{font-size:1.25rem;font-weight:850;letter-spacing:-.02em;flex:1 1 140px}.top5-score{font-size:1.62rem;font-weight:950;white-space:nowrap;letter-spacing:-.025em;color:#f2f6ff}.top5-score small,.top5-price small,.top5-opp small{font-size:.68rem;color:var(--muted);font-weight:800;letter-spacing:.06em}.top5-score .den{font-size:.72rem;color:#9ea9bc;font-weight:800;margin-left:1px}.top5-price{font-size:1.06rem;font-weight:900;white-space:nowrap;color:#e9eef8}.top5-price .ccy{font-size:.62rem;color:#9ea9bc;font-weight:800;margin-left:3px}.top5-opp{font-size:.95rem;font-weight:800;white-space:nowrap;color:#cbd4e6}.top5-rankline{font-size:.75rem;color:#9ea9bc;margin:-1px 0 5px}.top5-rankline b{color:#e9eef8;font-weight:900}.top5-status{font-size:.82rem;line-height:1.45;color:#c7d0df;margin:5px 0 8px}.top5-pill{display:inline-block;padding:2px 7px;border-radius:999px;background:#1a2332;border:1px solid #2d3a50;font-size:.72rem;font-weight:800}.top5-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:7px 0}.top5-mini{min-width:0;background:#0e1520;border:1px solid #263249;border-radius:11px;padding:8px 9px}.top5-mini .lbl{display:block;color:var(--muted);font-size:.66rem;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.top5-mini .val{display:block;font-size:.98rem;font-weight:850;line-height:1.25;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.top5-mini .sub{display:block;color:#9eabc0;font-size:.64rem;line-height:1.25;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.top5-alert{margin:7px 0 3px;padding:7px 9px;border-radius:10px;border:1px solid #59482b;background:rgba(246,200,95,.08);font-size:.76rem;line-height:1.35}.top5-plan{margin:7px 0 2px;padding:8px 9px;border:1px solid #284a3d;border-radius:11px;background:rgba(39,190,120,.06);font-size:.76rem;line-height:1.45}.top5-detail-line{font-size:.78rem;line-height:1.45;color:#aeb9ca;margin:3px 0}
 .scan-complete-banner{margin:10px 0 10px;padding:12px 14px;border-radius:14px;border:1px solid rgba(57,255,136,.72);background:linear-gradient(90deg,rgba(20,95,58,.24),rgba(9,31,24,.74));color:#39ff88;font-size:1.02rem;font-weight:950;letter-spacing:.045em;text-shadow:0 0 9px rgba(57,255,136,.78),0 0 18px rgba(57,255,136,.35);box-shadow:0 0 0 1px rgba(57,255,136,.08) inset,0 0 18px rgba(57,255,136,.18)}.scan-complete-banner .scan-time{color:#d8ffe8;font-weight:900;letter-spacing:.02em}.scan-complete-banner .scan-tz{color:#9fffc3;font-size:.72rem;font-weight:850;margin-left:6px}.scan-summary-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:7px 0 8px}.scan-summary-card{background:#0e1520;border:1px solid #263249;border-radius:11px;padding:8px 9px;min-width:0}.scan-summary-card .n{display:block;font-size:1.05rem;font-weight:900;color:#f4f7fb}.scan-summary-card .l{display:block;font-size:.64rem;font-weight:800;color:#8f9bad;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.decision-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:5px 0 9px}.decision-chip{border-radius:11px;padding:9px 10px;border:1px solid #2a3851;background:#101724}.decision-chip .k{display:block;color:#8f9bad;font-size:.65rem;font-weight:800}.decision-chip .v{display:block;margin-top:2px;font-size:.92rem;font-weight:900}.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}.why-panel{border-radius:14px;padding:11px 12px}.why-panel.yes{border:1px solid rgba(53,212,154,.46);background:rgba(53,212,154,.055);box-shadow:0 0 18px rgba(53,212,154,.055)}.why-panel.no{border:1px solid rgba(255,100,124,.42);background:rgba(255,100,124,.045);box-shadow:0 0 18px rgba(255,100,124,.045)}.why-title{font-size:.86rem;font-weight:950;letter-spacing:.04em;margin-bottom:7px}.why-panel.yes .why-title{color:#52efaF}.why-panel.no .why-title{color:#ff7187}.why-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px solid rgba(255,255,255,.055);font-size:.75rem;line-height:1.3}.why-row:first-of-type{border-top:0}.why-row .wk{color:#9eabc0;font-weight:700;min-width:0}.why-row .wv{font-weight:900;text-align:right}.why-row .wv.yes{color:#52efaf}.why-row .wv.no{color:#ff7187}.why-row .wv.warn{color:#f6c85f}.why-empty{font-size:.74rem;color:#9eabc0;padding:5px 0}.why-tech-title{font-size:.72rem;color:#8f9bad;font-weight:800;margin:10px 0 2px}
 @media (max-width: 700px){
@@ -1637,19 +1637,8 @@ def _pre_move_actionability_v63957(row, board=None):
         state='HIGH-CONFIDENCE PATTERN • NOT ACTIONABLE NOW';reason=' • '.join(veto) if veto else 'Pattern confirmed, but live action gate is not open'
     elif strength=='WATCH':
         if veto:
-            _vtxt=' • '.join(veto).upper()
-            # V6.3.9.65 — blocker hierarchy. The headline must name the primary
-            # execution problem instead of collapsing every severe veto into CHASE.
-            if 'LIQUIDITY BLOCK' in _vtxt:
-                state='PRE-MOVE WATCH • LIQUIDITY BLOCK'
-            elif any(x in _vtxt for x in ('STALE','UNVERIFIED SESSION DATA','DATA QUALITY','MARKET CLOSED')):
-                state='PRE-MOVE WATCH • RECHECK / DATA BLOCK'
-            elif any(x in _vtxt for x in ('RETEST','TOO LATE','MOVE ') ) and ('CONSUMED' in _vtxt or 'RETEST' in _vtxt or 'TOO LATE' in _vtxt):
-                state='PRE-MOVE WATCH • RETEST / LATE'
-            elif any(x in _vtxt for x in ('CHASE HIGH','CHASE EXTREME','EXTENDED')):
-                state='PRE-MOVE WATCH • EXTENDED / DO NOT CHASE'
-            else:
-                state='PRE-MOVE WATCH • NOT ACTIONABLE NOW'
+            _watch_severe=any(x in ' • '.join(veto).upper() for x in ('CHASE HIGH','CHASE EXTREME','EXTENDED','TOO LATE','LIQUIDITY BLOCK','STALE','RETEST'))
+            state='PRE-MOVE WATCH • EXTENDED / DO NOT CHASE' if _watch_severe else 'PRE-MOVE WATCH • NOT ACTIONABLE NOW'
             reason=' • '.join(veto)+' • another independent confirmation is still required'
         else:
             state='PRE-MOVE WATCH ONLY';reason='Promising pattern; another independent confirmation is still required'
@@ -1678,22 +1667,15 @@ def _pre_move_radar_enrich_v63959(df):
         act=bool(r.get('PreMoveRadarActionable',r.get('PreMoveActionableNow',False)))
         astate=str(r.get('PreMoveActionabilityState','') or '').upper();areason=str(r.get('PreMoveActionabilityReason','') or '').upper()
         retest=('RETEST' in astate or 'RETEST' in areason or eff=='RETEST')
-        liq_block=('LIQUIDITY BLOCK' in astate or 'LIQUIDITY BLOCK' in areason or not bool(r.get('LiquidityHardGateOK',True)))
-        data_block=any(x in (astate+' • '+areason) for x in ('STALE','UNVERIFIED SESSION DATA','DATA QUALITY','MARKET CLOSED'))
-        late_block=(retest or eff=='TOO LATE' or 'TOO LATE' in astate or 'TOO LATE' in areason)
-        chase_block=('DO NOT CHASE' in astate or any(x in areason for x in ('CHASE HIGH','CHASE EXTREME','EXTENDED CONTEXT')))
-        # V6.3.9.65 primary blocker priority:
-        # Liquidity -> data freshness -> retest/late -> extension/chase -> generic watch.
         if stg=='HIGH' and act:status='HIGH PRE-MOVE • ACTIONABLE EARLY'
-        elif stg=='HIGH' and liq_block:status='HIGH PRE-MOVE PATTERN • LIQUIDITY BLOCK'
-        elif stg=='HIGH' and data_block:status='HIGH PRE-MOVE PATTERN • RECHECK / DATA BLOCK'
-        elif stg=='HIGH' and late_block:status='HIGH PRE-MOVE PATTERN • RETEST / LATE'
-        elif stg=='HIGH' and chase_block:status='HIGH PRE-MOVE PATTERN • EXTENDED / DO NOT CHASE'
+        elif stg=='HIGH' and retest:status='HIGH PRE-MOVE PATTERN • RETEST ONLY'
+        elif stg=='HIGH' and eff=='TOO LATE':status='HIGH PRE-MOVE PATTERN • TOO LATE NOW'
         elif stg=='HIGH':status='HIGH PRE-MOVE PATTERN • WATCH'
-        elif stg=='WATCH' and liq_block:status='PRE-MOVE WATCH • LIQUIDITY BLOCK'
-        elif stg=='WATCH' and data_block:status='PRE-MOVE WATCH • RECHECK / DATA BLOCK'
-        elif stg=='WATCH' and late_block:status='PRE-MOVE WATCH • RETEST / LATE'
-        elif stg=='WATCH' and chase_block:status='PRE-MOVE WATCH • EXTENDED / DO NOT CHASE'
+        elif stg=='WATCH' and retest:status='PRE-MOVE WATCH • RETEST ONLY'
+        elif stg=='WATCH' and eff=='TOO LATE':status='PRE-MOVE WATCH • LATE NOW'
+        elif stg=='WATCH' and ('DO NOT CHASE' in astate or any(x in areason for x in ('CHASE HIGH','CHASE EXTREME','EXTENDED CONTEXT'))):status='PRE-MOVE WATCH • EXTENDED / DO NOT CHASE'
+        elif stg=='WATCH' and 'LIQUIDITY BLOCK' in areason:status='PRE-MOVE WATCH • LOW LIQUIDITY'
+        elif stg=='WATCH' and ('STALE' in areason or 'MARKET CLOSED' in areason):status='PRE-MOVE WATCH • RECHECK / DATA BLOCK'
         elif stg=='WATCH':status='PRE-MOVE WATCH'
         else:status='NOT IN TOP PRE-MOVE RADAR'
         statuses.append(status)
@@ -1750,24 +1732,16 @@ def _decision_board_enrich_v63948(df):
     _sess_ok=z.get('SessionDataFresh',pd.Series(False,index=z.index)).fillna(False).astype(bool)
     _livepx=z.get('LivePriceFresh',pd.Series(False,index=z.index)).fillna(False).astype(bool)
     _rr_phase=_phase.isin(['OPEN','PRE-MARKET'])
-    _liq_ok=z.get('LiquidityHardGateOK',pd.Series(True,index=z.index)).fillna(False).astype(bool)
-    _plan_ok=z.get('PlanValid',pd.Series(True,index=z.index)).fillna(False).astype(bool)
-    _rr_base_ctx=_price_ok & _sess_ok & _livepx & _rr_phase & ~_prev & _plan_ok
-    _rr_ctx=_rr_base_ctx & _liq_ok
-    _rr_research_liq=_rr_base_ctx & ~_liq_ok
+    _rr_ctx=_price_ok & _sess_ok & _livepx & _rr_phase & ~_prev
     _rr1=pd.to_numeric(z.get('LiveRR_T1',pd.Series(np.nan,index=z.index)),errors='coerce')
     _rr2=pd.to_numeric(z.get('LiveRR_T2',pd.Series(np.nan,index=z.index)),errors='coerce')
-    # Raw LiveRR remains auditable. A liquidity-blocked plan can show its geometry
-    # only as RESEARCH R:R; it can never be labelled LIVE R:R.
-    z['LiveRRDisplayT1']=_rr1.where(_rr_ctx | _rr_research_liq)
-    z['LiveRRDisplayT2']=_rr2.where(_rr_ctx | _rr_research_liq)
+    z['LiveRRDisplayT1']=_rr1.where(_rr_ctx)
+    z['LiveRRDisplayT2']=_rr2.where(_rr_ctx)
     _rr_status=pd.Series('LIVE R:R',index=z.index,dtype='object')
     _rr_status.loc[~_price_ok]='N/A — PRICE OUTSIDE ENTRY CONTEXT'
     _rr_status.loc[_price_ok & ~_rr_phase]='N/A — MARKET NOT LIVE'
     _rr_status.loc[_price_ok & _rr_phase & (~_sess_ok | ~_livepx)]='N/A — STALE / UNVERIFIED LIVE DATA'
-    _rr_status.loc[_price_ok & _sess_ok & _livepx & _rr_phase & ~_prev & ~_plan_ok]='N/A — PLAN INVALID'
-    _rr_status.loc[_rr_research_liq]='RESEARCH R:R — LIQUIDITY BLOCK'
-    _rr_status.loc[(_rr_ctx | _rr_research_liq) & _rr1.isna()]='N/A — R:R UNAVAILABLE'
+    _rr_status.loc[_rr_ctx & _rr1.isna()]='N/A — R:R UNAVAILABLE'
     z['LiveRRDisplayStatus']=_rr_status
     _rs=pd.to_numeric(z.get('DecisionRankScore',z.get('TopScore',pd.Series(np.nan,index=z.index))),errors='coerce')
     z['OverallStrengthRank']=_rs.rank(method='first',ascending=False,na_option='bottom').astype('Int64')
@@ -5522,25 +5496,6 @@ def _apply_decision_ranking_v63919(df,scan_mode='Production 151'):
     rank_fields=z.apply(row_score,axis=1)
     for c in rank_fields.columns:z[c]=rank_fields[c]
 
-    # V6.3.9.65 — final execution-liquidity integrity guard. Keep the raw numeric
-    # DecisionRankScore for research, but a failed liquidity hard gate can never
-    # remain in Q/E/current-opportunity lanes even if an upstream overlay supplied
-    # stale eligibility flags. EvidenceValidated stays historical/audit-only.
-    _liq_exec=z.get('LiquidityHardGateOK',pd.Series(True,index=z.index)).fillna(False).astype(bool)
-    _liq_block=~_liq_exec
-    if bool(_liq_block.any()):
-        for _c in ('DecisionRankEligible','ValidatedOpportunityEligible','CurrentOpportunityQualified','EmergingSetupEligible'):
-            if _c in z.columns:z.loc[_liq_block,_c]=False
-        if 'DecisionLane' in z.columns:z.loc[_liq_block,'DecisionLane']='RESEARCH / BLOCKED'
-        if 'CurrentOpportunityQualification' in z.columns:
-            z.loc[_liq_block,'CurrentOpportunityQualification']=z.loc[_liq_block].apply(lambda r:'CURRENT WAIT — '+str(r.get('LiquidityBlockReason','LIQUIDITY BLOCK')),axis=1)
-        if 'ValidatedOpportunityReason' in z.columns:
-            z.loc[_liq_block,'ValidatedOpportunityReason']=z.loc[_liq_block].apply(lambda r:str(r.get('LiquidityBlockReason','LIQUIDITY BLOCK'))+' • EXECUTION BLOCK',axis=1)
-        if 'DecisionRankQualification' in z.columns:
-            z.loc[_liq_block,'DecisionRankQualification']=z.loc[_liq_block].apply(lambda r:str(r.get('LiquidityBlockReason','LIQUIDITY BLOCK'))+' • EXECUTION BLOCK',axis=1)
-        if 'EmergingSetupReason' in z.columns:
-            z.loc[_liq_block,'EmergingSetupReason']=z.loc[_liq_block].apply(lambda r:str(r.get('LiquidityBlockReason','LIQUIDITY BLOCK'))+' • not eligible for Emerging NOW',axis=1)
-
     # V6.3.9.31 final decision/action consistency guard. Keep the Entry engine's
     # original recommendation for audit, then synchronize the visible action with
     # CurrentOpportunityQualified + DecisionLane + timing/data safety guards.
@@ -5602,20 +5557,18 @@ def _apply_decision_ranking_v63919(df,scan_mode='Production 151'):
         stage=str(r.get('TradeStage',r.get('EntryTriggerState','WAIT')) or 'WAIT').upper()
         timing=str(r.get('TimingQualification','') or '').upper()
         data=str(r.get('DataFreshnessQualification','') or '').upper()
-        liquidity_ok=_bool33(r.get('LiquidityHardGateOK',True),True)
-        q=_bool33(r.get('ValidatedOpportunityEligible',False),False) and _bool33(r.get('CurrentOpportunityQualified',False),False) and liquidity_ok
-        e=_bool33(r.get('EmergingSetupEligible',False),False) and liquidity_ok
+        q=_bool33(r.get('ValidatedOpportunityEligible',False),False) and _bool33(r.get('CurrentOpportunityQualified',False),False)
+        e=_bool33(r.get('EmergingSetupEligible',False),False)
         hard_consumed=_bool33(r.get('TimingConsumedHardBlock',False),False)
         no_chase=_bool33(r.get('NoChaseCheck',True),True)
         extension_ok=_bool33(r.get('ExtensionGuardCheck',True),True)
         evidence_lane_block=lane.startswith('EVIDENCE VALIDATED') and lane.endswith('/ BLOCKED')
-        safety_block=((not liquidity_ok) or stage=='INVALIDATED' or hard_consumed or (not no_chase) or (not extension_ok)
+        safety_block=(stage=='INVALIDATED' or hard_consumed or (not no_chase) or (not extension_ok)
                       or evidence_lane_block
                       or any(k in timing for k in ('TOO LATE','RETEST ONLY','VERY LATE','DO NOT CHASE','TIMING DATA INCOMPLETE'))
                       or any(k in data for k in ('STALE','DATA BLOCK','DATA QUALITY BLOCK')))
         if q:return 0,'Q — QUALIFIED NOW',True
         if e:return 1,'E — EMERGING NOW',True
-        if not liquidity_ok:return 3,'BLOCKED / LOW LIQUIDITY',False
         if safety_block:return 3,'BLOCKED / HISTORICAL ONLY',False
         return 2,'CURRENT WATCH / RESEARCH',True
 
@@ -10873,16 +10826,9 @@ with tab_analyze:
         _an_card.update({'RawDecisionBoardStage':_decision_stage_canonical_v63961(_an_raw_board),'DecisionBoardStage':_decision_stage_canonical_v63961(_an_raw_board),'EffectiveDecisionStage':_decision_stage_canonical_v63961(_an_eff),'DecisionDisplayStage':_decision_stage_canonical_v63961(_an_disp0),'EffectiveDecisionReason':_an_eff_reason,'NeedsOpenRevalidation':_an_reval,'EntryNowHardGateOK':_an_gate_ok,'EntryNowHardGateReason':_an_gate_reason2,'ArmedQualified':_an_armed_ok,'ArmedQualificationState':'QUALIFIED' if _an_armed_ok else 'BLOCKED / INCOMPLETE','ArmedQualificationReason':_an_armed_reason})
         _an_prev=bool(_decision_stage_canonical_v63961(_an_eff)=='LAST SESSION ENTRY' or (_an_entry.upper()=='CONFIRMED ENTRY' and phase.upper() in ('CLOSED','AFTER-MARKET','PRE-OPEN')))
         _an_card['TradeStageDisplay']='PREVIOUS SESSION CONFIRMED ENTRY' if _an_prev else _an_entry
-        _an_rr_base=bool(ent.get('price_actionable_now',False)) and bool(_an_card.get('SessionDataFresh',False)) and bool(_an_card.get('LivePriceFresh',False)) and phase.upper() in ('OPEN','PRE-MARKET') and not _an_prev and bool(_an_card.get('PlanValid',True))
-        _an_liq_ok=bool(_an_card.get('LiquidityHardGateOK',False))
-        _an_rr_ctx=bool(_an_rr_base and _an_liq_ok)
-        _an_rr_research=bool(_an_rr_base and not _an_liq_ok)
-        _an_card['LiveRRDisplayT1']=ent.get('live_rr_t1',np.nan) if (_an_rr_ctx or _an_rr_research) else np.nan;_an_card['LiveRRDisplayT2']=ent.get('live_rr_t2',np.nan) if (_an_rr_ctx or _an_rr_research) else np.nan
-        if _an_rr_ctx and np.isfinite(_num6395(ent.get('live_rr_t1',np.nan))):_an_card['LiveRRDisplayStatus']='LIVE R:R'
-        elif _an_rr_research and np.isfinite(_num6395(ent.get('live_rr_t1',np.nan))):_an_card['LiveRRDisplayStatus']='RESEARCH R:R — LIQUIDITY BLOCK'
-        elif not bool(ent.get('price_actionable_now',False)):_an_card['LiveRRDisplayStatus']='N/A — PRICE OUTSIDE ENTRY CONTEXT'
-        elif not bool(_an_card.get('PlanValid',True)):_an_card['LiveRRDisplayStatus']='N/A — PLAN INVALID'
-        else:_an_card['LiveRRDisplayStatus']='N/A — LIVE DATA NOT QUALIFIED'
+        _an_rr_ctx=bool(ent.get('price_actionable_now',False)) and bool(_an_card.get('SessionDataFresh',False)) and bool(_an_card.get('LivePriceFresh',False)) and phase.upper() in ('OPEN','PRE-MARKET') and not _an_prev
+        _an_card['LiveRRDisplayT1']=ent.get('live_rr_t1',np.nan) if _an_rr_ctx else np.nan;_an_card['LiveRRDisplayT2']=ent.get('live_rr_t2',np.nan) if _an_rr_ctx else np.nan
+        _an_card['LiveRRDisplayStatus']=('LIVE R:R' if _an_rr_ctx and np.isfinite(_num6395(ent.get('live_rr_t1',np.nan))) else ('N/A — PRICE OUTSIDE ENTRY CONTEXT' if not bool(ent.get('price_actionable_now',False)) else 'N/A — LIVE DATA NOT QUALIFIED'))
         _aps,_apa,_apst,_apr=_pre_move_actionability_v63957(_an_card,_an_raw_board);_an_card.update({'PreMovePatternStrength':_aps,'PreMoveActionableNow':_apa,'PreMoveActionabilityState':_apst,'PreMoveActionabilityReason':_apr,'PreMovePatternDetected':_aps in ('HIGH','WATCH'),'PreMoveRadarActionable':bool(_apa and _aps in ('HIGH','WATCH'))})
         _an_board=_an_eff
         _an_display_board,_an_display_window,_an_display_reason=_decision_display_semantics_v63953(_an_card,_an_board,_an_window,_an_eff_reason)

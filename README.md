@@ -1,16 +1,6 @@
-# AI Stock Hunter V6.3.9.65
+# AI Stock Hunter V6.3.9.64
 
-## V6.3.9.65 — Liquidity Rank Integrity + R:R Semantics + Pre-Move Blocker Priority + Neon Credit
-
-
-### What changed in V6.3.9.65
-
-- **Liquidity now governs active ranking lanes:** a failed `LiquidityHardGateOK` can never remain `Q — QUALIFIED NOW`, `E — EMERGING NOW`, `CurrentOpportunityQualified`, or `TradePriorityCurrentEligible`. Raw `DecisionRankScore`/`DecisionScoreRank` remain available for research; execution `GlobalRank` / `TradePriorityRank` pushes liquidity-blocked names into `BLOCKED / LOW LIQUIDITY`.
-- **R:R semantics are explicit:** `LIVE R:R` requires a valid plan, fresh live/session data, price-entry context, live market phase, and a passing liquidity gate. A valid geometry on a liquidity-blocked name is shown only as `RESEARCH R:R — LIQUIDITY BLOCK`.
-- **Pre-Move blocker priority is deterministic:** `LIQUIDITY BLOCK` → `DATA BLOCK` → `RETEST / LATE` → `EXTENDED / DO NOT CHASE` → generic WATCH. This prevents a low-liquidity stock from being mislabeled primarily as an extension/chase issue.
-- **Main-page credit is now neon green:** `Developed by Alon Azoulay` is bold, pill-framed, and glow-highlighted.
-- V6.3.9.64 liquidity scoring, market-specific turnover floors, Analyze Israel-time completion banner, retest integrity, core-deep reservation, and all prior feedback/audit behavior remain intact.
-- **No Optimizer weight changes** in this release.
+## V6.3.9.64 — Liquidity Gate + WATCH Integrity + Israel Analyze Clock
 
 - Adds a market-aware **Liquidity Score (0–100)** using robust 20/60-day traded value. US uses USD, Hong Kong uses HKD, and Tel Aviv turnover is converted from Yahoo agorot to ILS.
 - Adds **LiquidityHardGateOK**: low baseline liquidity can remain visible for research/radar but cannot qualify as live ENTRY NOW or a trade-qualified ARMED setup.
@@ -22,7 +12,7 @@
 - Production/OOS optimizer weights are unchanged.
 
 ## Purpose
-V6.3.9.65 builds on V6.3.9.64 without changing Optimizer weights, the main 80% Trade Timing hard gate, Continuation thresholds, Ranking weights or the normal confirmed-entry thresholds. It fixes actionability/display contradictions found in the V6.3.9.62 production scan and adds a structurally valid retest plan.
+V6.3.9.64 builds on V6.3.9.63 without changing Optimizer weights, the main 80% Trade Timing hard gate, Continuation thresholds, Ranking weights or the normal confirmed-entry thresholds. It fixes actionability/display contradictions found in the V6.3.9.62 production scan and adds a structurally valid retest plan.
 
 ## V6.3.9.63 retained changes
 
@@ -142,7 +132,7 @@ V6.3.9.62 retains:
 
 ## Validation after upload
 
-For V6.3.9.65 specifically, confirm that Scanner/Analyze show `LiquidityScore`, `LiquidityLabel`, `MedianDailyTurnover60`, and `LiquidityHardGateOK`; a LOW-liquidity row must not appear as live `ENTRY NOW` or qualified `ARMED`. Analyze completion should show Israel time in the glowing green completion banner, and the main hero should show `Developed by Alon Azoulay`.
+For V6.3.9.64 specifically, confirm that Scanner/Analyze show `LiquidityScore`, `LiquidityLabel`, `MedianDailyTurnover60`, and `LiquidityHardGateOK`; a LOW-liquidity row must not appear as live `ENTRY NOW` or qualified `ARMED`. Analyze completion should show Israel time in the glowing green completion banner, and the main hero should show `Developed by Alon Azoulay`.
 
 No Optimizer rerun is required.
 
