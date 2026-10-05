@@ -10,10 +10,10 @@ import urllib.parse as _urlparse
 import time as _time
 import threading as _threading
 
-AI_STOCK_HUNTER_ENGINE_BUILD = "6.3.9.64"
+AI_STOCK_HUNTER_ENGINE_BUILD = "6.3.9.65"
 
-ENGINE_VERSION = "6.3.9.64"
-ENGINE_BUILD_ID = "V63964-LIQUIDITY-WATCH-ISRAEL-CREDIT-20261005-A"
+ENGINE_VERSION = "6.3.9.65"
+ENGINE_BUILD_ID = "V63965-LIQUIDITY-RANK-RR-PREMOVE-CREDIT-20261005-A"
 
 def get_engine_version():
     return ENGINE_VERSION
